@@ -4,15 +4,15 @@
 
 	angular
 	.module("app")
-	.controller("BookController",
+	.controller("AdminController",
 		["$scope",
 		"$rootScope",
 		"$location",
 		"ModalService",
 		"$state",
-		BookController]);
+		AdminController]);
 
-	function BookController($scope, $rootScope, $location, ModalService, $state) {
+	function AdminController($scope, $rootScope, $location, ModalService, $state) {
 		var vm = this;
 
 		/*vm.products=[];

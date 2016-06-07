@@ -15,28 +15,25 @@
                        $stateProvider
                             .state("home", {
                                 url: "/",
-                                templateUrl: "index.html",
+                                templateUrl: "templates/partials/books.html",
                                 controller: "BookController as vm",
-                                //admin: false,
-                                //authenticated: false,
-                                //dashboard: true
-                            });
-                            /*.state("login", {
-                                url: "/login",
-                                templateUrl: "login.html",
-                                controller: "AuthController as vm",
-                                admin: true,
                                 authenticated: false,
                                 dashboard: true
                             })
+                            .state("login", {
+                                url: "/login",
+                                templateUrl: "templates/login.html",
+                                controller: "AdminController as vm",
+                                authenticated: false,
+                                dashboard: false
+                            })
                             .state("admin", {
                                 url: "/admin",
-                                templateUrl: "admin/index.html",
+                                templateUrl: "app/admin/admin.html",
                                 controller: "AdminController as vm",
-                                admin: true,
                                 authenticated: true,
                                 dashboard: false
-                            });*/
+                            });
 
                             // use the HTML5 History API
                             //$locationProvider.html5Mode(true);

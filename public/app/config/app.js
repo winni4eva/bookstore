@@ -3,13 +3,12 @@
 	var app = angular	
 			.module("app",
 					[
-                                                            'ui.router',
-                                                            'ngResource',
-                                                            'ngRoute',
-                                                            'ngCookies',
-                                                            'app.admin',
-                                                            'angularModalService'
-                                                        ]);
+                                                                        'ui.router',
+                                                                        'ngResource',
+                                                                        'ngRoute',
+                                                                        'ngCookies',
+                                                                        'angularModalService'
+                                                                ]);
             
             //Exception Handling
             app.config(function ($provide) {
@@ -28,6 +27,8 @@
             app.run(['$rootScope', '$location' , '$cookieStore', function ($rootScope, $location, $cookieStore) {
                     $rootScope.$on("$stateChangeStart", function(event, next, current){
 
+                        //alert(JSON.stringify(next));
+                        $rootScope.route=next;
                         /*$rootScope.admin = next.admin;
                         $rootScope.dashboard = next.dashboard;
 
