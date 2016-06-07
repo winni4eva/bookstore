@@ -61,11 +61,11 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 		<div class="top-nav">
 			<ul>
 				<li><a href="index.html">Home</a></li>
-				<li><a href="about.html">About</a></li>
-				<li><a href="store.html">Store</a></li>
-				<li><a href="store.html">Featured</a></li>
-				<li><a href="blog.html">Blog</a></li>
-				<li><a href="contact.html">Contact</a></li>
+				<li><a href="templates/about.html">About</a></li>
+				<li><a href="templates/store.html">Store</a></li>
+				<li><a href="templates/store.html">Featured</a></li>
+				<li><a href="templates/blog.html">Blog</a></li>
+				<li><a href="templates/contact.html">Contact</a></li>
 			</ul>
 		</div>
 		<div class="clear"> </div>
@@ -89,7 +89,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 		    <div class="clear"> </div>
 		    <div class="wrap">
 		    <div class="content">
-		    	<div class="top-3-grids">
+		    	<!-- <div class="top-3-grids">
 		    		<div class="section group">
 				<div class="grid_1_of_3 images_1_of_3">
 					  <a href="single.html"><img src="images/grid-img1.jpg"></a>
@@ -204,28 +204,28 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 		    	</div>
 		    	<div class="content-sidebar">
 		    		<h4>Categories</h4>
-						<ul>
-							<li><a href="#">Accord Mobiles</a></li>
-							<li><a href="#">Ace Mobile</a></li>
-							<li><a href="#">Acer Mobile</a></li>
-							<li><a href="#">Airfone</a></li>
-							<li><a href="#">Apple</a></li>
-							<li><a href="#">Blackberry</a></li>
-							<li><a href="#">Byond Tech</a></li>
-							<li><a href="#">Celkon Mobiles</a></li>
-							<li><a href="#">Dell Mobile Phones </a></li>
-							<li><a href="#">Fly Mobile</a></li>
-							<li><a href="#">Fujezone Mobiles </a></li>
-							<li><a href="#">HTC</a></li>
-							<li><a href="#">LG Mobiles</a></li>
-							<li><a href="#">Longtel Mobile</a></li>
-							<li><a href="#">Maxx</a></li>
-							<li><a href="#">Micromax Mobiles </a></li>
-							<li><a href="#">Samsung Mobiles</a></li>
-							<li><a href="#">Sony Ericsson Mobiles</a></li>
-							<li><a href="#">Wynncom Mobiles</a></li>
-						</ul>
-		    	</div>
+				<ul>
+					<li><a href="#">Accord Mobiles</a></li>
+					<li><a href="#">Ace Mobile</a></li>
+					<li><a href="#">Acer Mobile</a></li>
+					<li><a href="#">Airfone</a></li>
+					<li><a href="#">Apple</a></li>
+					<li><a href="#">Blackberry</a></li>
+					<li><a href="#">Byond Tech</a></li>
+					<li><a href="#">Celkon Mobiles</a></li>
+					<li><a href="#">Dell Mobile Phones </a></li>
+					<li><a href="#">Fly Mobile</a></li>
+					<li><a href="#">Fujezone Mobiles </a></li>
+					<li><a href="#">HTC</a></li>
+					<li><a href="#">LG Mobiles</a></li>
+					<li><a href="#">Longtel Mobile</a></li>
+					<li><a href="#">Maxx</a></li>
+					<li><a href="#">Micromax Mobiles </a></li>
+					<li><a href="#">Samsung Mobiles</a></li>
+					<li><a href="#">Sony Ericsson Mobiles</a></li>
+					<li><a href="#">Wynncom Mobiles</a></li>
+				</ul>
+		    	</div> -->
 		    </div>
 		    <div class="clear"> </div>
 		    </div>
@@ -233,9 +233,13 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 			<div class="wrap">
 			<div class="section group">
 				<div class="col_1_of_4 span_1_of_4">
-					<h3>Our Info</h3>
-					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+					<ul>
+					 	<li><a ui-sref="admin">Admin</a></li>
+					 </ul>
+					<!-- <h3>Our Info</h3>
+					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p> -->
 				</div>
+				<!-- 
 				<div class="col_1_of_4 span_1_of_4">
 					<h3>Latest-News</h3>
 					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
@@ -258,17 +262,36 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 					 	<li><a href="#"><img src="images/facebook.png" title="Facebook" />Facebook</a></li>
 					 	<li><a href="#"><img src="images/rss.png" title="Rss" />Rss</a></li>
 					 </ul>
-				</div>
+				</div> -->
 			</div>
 		</div>
 		
 		<div class="clear"> </div>
 		<div class="wrap">
-		<div class="copy-right">
+		<!-- <div class="copy-right">
 			<p>Mobilestore  &#169	 All Rights Reserved | Design By <a href="http://w3layouts.com/">W3Layouts</a></p>
+		</div> -->
 		</div>
 		</div>
-		</div>
+
+		<!-- Angular Modules -->
+	       	<script type="text/javascript" src="js/angularjs/angular.min.js"></script>
+	       	<script type="text/javascript" src="js/angularjs/angular-route.min.js"></script>
+	       	<script type="text/javascript" src="js/angularjs/angular-ui-router.min.js"></script>
+	       	<script type="text/javascript" src="js/angularjs/angular-resource.min.js"></script>
+	           	<script type="text/javascript" src="js/angularjs/angular-cookies.min.js"></script>
+	           	<script type="text/javascript" src="js/angularjs/angular-modal-service.js"></script>
+	       	<!-- Angular Config -->
+	       	<script type="text/javascript" src="app/config/app.js"></script>
+	       	<script type="text/javascript" src="app/config/routing.js"></script>
+	       	<!-- Services -->
+	       	<script type="text/javascript" src="app/books/booksService.js"></script>
+	            	<!-- Directives -->
+	            	<script type="text/javascript" src="js/angularjs/directives/fileUploadDirective.js"></script>
+	       	<!-- Controllers -->
+	       	<!--<script type="text/javascript" src="app/product/productController.js"></script>
+	       	<script type="text/javascript" src="app/admin/adminController.js"></script>
+	       	<script type="text/javascript" src="app/auth/authController.js"></script>-->
 	</body>
 </html>
 

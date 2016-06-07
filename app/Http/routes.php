@@ -14,3 +14,31 @@
 Route::get('/', function () {
     return view('index');
 });
+
+//Publicly accesible books api
+Route::group(array('prefix' => 'api'), function(){
+
+	Route::group(array('prefix' => 'v1', 'only' => ['index', 'show'] ), function(){
+
+		Route::resource('books', 'BooksController');
+
+	});
+
+});
+
+//Admin only books api
+Route::group(array('prefix' => 'api'), function(){
+
+	Route::group(array('prefix' => 'v1'), function(){
+
+		Route::group(array('prefix' => 'admin'), function(){
+
+			Route::resource('books', 'BooksController');
+			Route::resource('categories', 'CategoryController');
+			//Route::resource('banners', 'BannerImagesController');
+
+		});
+
+	});
+
+});
