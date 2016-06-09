@@ -12,15 +12,17 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                           <link rel="stylesheet" type="text/css" href="font-awesome/css/font-awesome.min.css" />
                           <link rel="stylesheet" type="text/css" href="css/local.css" />
 
+
                           <script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
                           <script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>
 
                             <!-- you need to include the shieldui css and js assets in order for the charts to work -->
+                            <!--
                           <link rel="stylesheet" type="text/css" href="http://www.shieldui.com/shared/components/latest/css/light-bootstrap/all.min.css" />
                            <link id="gridcss" rel="stylesheet" type="text/css" href="http://www.shieldui.com/shared/components/latest/css/dark-bootstrap/all.min.css" />
 
                           <script type="text/javascript" src="http://www.shieldui.com/shared/components/latest/js/shieldui-all.min.js"></script>
-                          <script type="text/javascript" src="http://www.prepbootstrap.com/Content/js/gridData.js"></script>
+                          <script type="text/javascript" src="http://www.prepbootstrap.com/Content/js/gridData.js"></script>-->
 		<link href="css/style.css" rel="stylesheet" type="text/css"  media="all" />
 
 		<meta name="keywords" content="Mobilestore iphone web template, Andriod web template, Smartphone web template, free webdesigns for Nokia, Samsung, LG, SonyErricsson, Motorola web design" />
@@ -76,8 +78,12 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 		<div class="top-nav">
 			<ul>
 				<li><a ui-sref="home" style="cursor:pointer">Home</a></li>
-				<li><a ui-sref="admin" style="cursor:pointer">Admin</a></li>
-                                                    <li><a ui-sref="login" style="cursor:pointer">Login</a></li>
+				<li><a ui-sref="admin.books" style="cursor:pointer" ng-show="!route.admin">Admin</a></li>
+                                                    <li><a ui-sref="admin.add_book" style="cursor:pointer" ng-show="route.admin">Add Book</a></li>
+                                                    <li><a ui-sref="admin.add_category" style="cursor:pointer" ng-show="route.admin">Add Category</a></li>
+                                                    <li><a ui-sref="admin.books" style="cursor:pointer" ng-show="route.admin">Books</a></li>
+                                                    <li><a ui-sref="admin.categories" style="cursor:pointer" ng-show="route.admin">Categories</a></li>
+                                                    <!-- <li><a ui-sref="login" style="cursor:pointer">Login</a></li> -->
 			</ul>
 		</div>
 		<div class="clear"> </div>
@@ -90,9 +96,9 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 			<div class="image-slider">
 				<!-- Slideshow 1 -->
 				    <ul class="rslides" id="slider1">
-					      <li><img src="images/1.png" alt=""></li>
-					      <li><img src="images/2.png" alt=""></li>
-					      <li><img src="images/1.png" alt=""></li>
+					      <li><img src="images/banner.png" alt=""></li>
+					      <li><img src="images/banner.png" alt=""></li>
+					      <li><img src="images/banner.png" alt=""></li>
 				    </ul>
 				 <!-- Slideshow 2 -->
 			</div>

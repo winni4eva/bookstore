@@ -11,6 +11,7 @@
                                      function($stateProvider, $urlRouterProvider,$locationProvider){
 		
 	           $urlRouterProvider.otherwise("/");
+                        $urlRouterProvider.when("/admin", "/books");
 
                        $stateProvider
                             .state("home", {
@@ -25,14 +26,45 @@
                                 templateUrl: "templates/login.html",
                                 controller: "AdminController as vm",
                                 authenticated: false,
-                                dashboard: false
+                                dashboard: false,
+                                 admin: false
                             })
                             .state("admin", {
                                 url: "/admin",
                                 templateUrl: "app/admin/admin.html",
                                 controller: "AdminController as vm",
                                 authenticated: true,
-                                dashboard: false
+                                dashboard: false,
+                                abstract: true,
+                                admin: true
+                            }).state("admin.books", {
+                                url: "/books",
+                                templateUrl: "app/admin/books.html",
+                                controller: "AdminController as vm",
+                                authenticated: true,
+                                dashboard: false,
+                                admin: true
+                            }).state("admin.add_book", {
+                                url: "/add_book",
+                                templateUrl: "app/admin/add_book.html",
+                                controller: "AdminController as vm",
+                                authenticated: true,
+                                dashboard: false,
+                                admin: true
+                            }).state("admin.add_category", {
+                                url: "/add_category",
+                                templateUrl: "app/admin/add_category.html",
+                                controller: "AdminController as vm",
+                                authenticated: true,
+                                dashboard: false,
+                                admin: true
+                            }).state("admin.categories", {
+                                url: "/categories",
+                                templateUrl: "app/admin/categories.html",
+                                controller: "AdminController as vm",
+                                authenticated: true,
+                                dashboard: false,
+                                admin: true
                             });
 
                             // use the HTML5 History API
