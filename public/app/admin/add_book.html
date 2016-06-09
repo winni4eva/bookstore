@@ -13,41 +13,8 @@
 <!-- Registration form - START -->
 <div class="container">
     <div class="row">
-        <form role="form">
-            <div class="col-lg-6">
-                <div class="well well-sm"><strong><span class="glyphicon glyphicon-asterisk"></span>Required Field</strong></div>
-                <div class="form-group">
-                    <label for="InputName">Enter Name</label>
-                    <div class="input-group">
-                        <input type="text" class="form-control height height" name="InputName" id="InputName" placeholder="Enter Name" required>
-                        <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="InputEmail">Enter Email</label>
-                    <div class="input-group">
-                        <input type="email" class="form-control height" id="InputEmailFirst" name="InputEmail" placeholder="Enter Email" required>
-                        <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="InputEmail">Confirm Email</label>
-                    <div class="input-group">
-                        <input type="email" class="form-control height" id="InputEmailSecond" name="InputEmail" placeholder="Confirm Email" required>
-                        <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="InputMessage">Enter Message</label>
-                    <div class="input-group">
-                        <textarea name="InputMessage" id="InputMessage" class="form-control" rows="5" required></textarea>
-                        <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
-                    </div>
-                </div>
-                <input type="submit" name="submit" id="submit" value="Submit" class="btn btn-info pull-right">
-            </div>
-        </form>
-        <div class="col-lg-5 col-md-push-1">
+
+        <div class="col-lg-5 col-md-push-1" ng-hide="true">
             <div class="col-md-12">
                 <div class="alert alert-success">
                     <strong><span class="glyphicon glyphicon-ok"></span> Success! Message sent.</strong>
@@ -57,6 +24,76 @@
                 </div>
             </div>
         </div>
+
+        <form role="form" name="addBookForm">
+            <div class="col-lg-6">
+
+                <div class="well well-sm"><strong><span class="glyphicon glyphicon-asterisk"></span>Required Field</strong></div>
+
+                <div class="form-group">
+                    <label for="title">Title</label>
+                    <div class="input-group">
+                        <input type="text" class="form-control height height" name="title" id="title" placeholder="Enter Title" required>
+                        <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="author">Author</label>
+                    <div class="input-group">
+                        <input type="text" class="form-control height" id="author" name="author" placeholder="Enter Author" required>
+                        <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="price">Cost Price</label>
+                    <div class="input-group">
+                        <input type="number" class="form-control height" id="price" name="price" placeholder="Enter Cost Price" step="1.00" required>
+                        <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="sales_price">Sales Price</label>
+                    <div class="input-group">
+                        <input type="number" class="form-control height" id="sales_price" name="sales_price" placeholder="Enter Sales Price" step="1.00" required>
+                        <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="quantity">Quantity</label>
+                    <div class="input-group">
+                        <input type="number" class="form-control height" id="quantity" name="quantity" placeholder="Enter Price" required>
+                        <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="category">Category</label>
+                    <div class="input-group">
+                        <select class="form-control height" id="category" name="category" required>
+                                <option>Adventure</option>
+                                <option>Fiction</option>
+                        </select>
+                        <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="description">Description</label>
+                    <div class="input-group">
+                        <textarea name="description" id="description" class="form-control" rows="5"></textarea>
+                        <span class="input-group-addon"><!-- <span class="glyphicon glyphicon-asterisk"> --></span></span>
+                    </div>
+                </div>
+
+                <input type="submit" name="submit" id="submit" value="Add Book" style="width:25%" class="btn btn-info pull-right">
+
+            </div>
+        </form>
+        
     </div>
 </div>
 <!-- Registration form - END -->

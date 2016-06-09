@@ -10,20 +10,22 @@
 		"$location",
 		"ModalService",
 		"$state",
+		"AdminService",
 		AdminController]);
 
-	function AdminController($scope, $rootScope, $location, ModalService, $state) {
+	function AdminController($scope, $rootScope, $location, ModalService, $state, AdminService) {
 		var vm = this;
 
+		vm.categoryDetails={};
+		vm.addCategorySuccess='';
+		vm.addCategoryError='';
 		/*vm.products=[];
 		vm.productDetails={};
-		vm.categoryDetails={};
+		
 		vm.bannerDetails={};
 		vm.categories=[];
 		vm.addProductSuccess='';
 		vm.addProductError='';
-		vm.addCategorySuccess='';
-		vm.addCategoryError='';
 		vm.addBannerError='';
 		vm.addBannerSuccess='';
 		vm.banners=[];
@@ -58,11 +60,11 @@
 	      			});
 			
 		}
-
+		*/
 		vm.addCategory=function(isValid){
-
+			//alert(JSON.stringify(isValid));
 			if(!isValid) return;
-
+			//alert("I passed");
 			vm.addCategorySuccess='';
 			vm.addCategoryError='';
 
@@ -75,7 +77,7 @@
 		          			vm.addCategoryError=response.error;
 		      		});
 		}
-
+		/*
 		vm.getCategories=function(){
 			
 			//Get all categories
