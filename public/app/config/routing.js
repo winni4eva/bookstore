@@ -11,7 +11,6 @@
                                      function($stateProvider, $urlRouterProvider,$locationProvider){
 		
 	           $urlRouterProvider.otherwise("/");
-                        $urlRouterProvider.when("/admin", "/books");
 
                        $stateProvider
                             .state("home", {
@@ -61,6 +60,20 @@
                             }).state("admin.categories", {
                                 url: "/categories",
                                 templateUrl: "app/admin/categories.html",
+                                controller: "AdminController as vm",
+                                authenticated: true,
+                                dashboard: false,
+                                admin: true
+                            }).state("admin.sales", {
+                                url: "/sales",
+                                templateUrl: "app/admin/sales.html",
+                                controller: "AdminController as vm",
+                                authenticated: true,
+                                dashboard: false,
+                                admin: true
+                            }).state("admin.reports", {
+                                url: "/reports",
+                                templateUrl: "app/admin/reports.html",
                                 controller: "AdminController as vm",
                                 authenticated: true,
                                 dashboard: false,
