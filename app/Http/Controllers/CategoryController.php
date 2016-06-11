@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
+use App\Http\Requests\CategoryRequest;
 use App\Category;
 use Log;
 
@@ -26,7 +27,7 @@ class CategoryController extends Controller
 
                                     $categories = $this->category->all();
 
-                                    return response()->json(compact('categories'), 200);
+                                    return response()->json( compact('categories'), 200);
 
                             } catch (Exception $e) {
                                     Log::error("Exception caught, filename: " . $e->getFile() . " on line: " . $e->getLine());
@@ -46,15 +47,15 @@ class CategoryController extends Controller
                 }
 
                 /**
-                 * Store a newly created resource in storage.
+                 * Store the incoming category post.
                  *
-                 * @param  \Illuminate\Http\Request  $request
-                 * @return \Illuminate\Http\Response
+                 * @param  CategoryRequest  $request
+                 * @return Response
                  */
-                public function store(Request $request)
+                public function store(CategoryRequest $request)
                 {
                             try {
-                                        \Log::info("I got here");
+                                        //updateOrCreate
                                         $this->category->create( $request->all() );
 
                                         return response()->json(['success' => 'Category added successfully...'], 200);

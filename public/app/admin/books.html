@@ -9,13 +9,10 @@
 <div class="container">
     <div class="row">
         
-        <div class="col-lg-5 col-md-push-1">
+        <div class="" ng-show="vm.getBooksError!=''">
             <div class="col-md-12">
-                <div class="alert alert-success">
-                    <strong><span class="glyphicon glyphicon-ok"></span> Success! Message sent.</strong>
-                </div>
                 <div class="alert alert-danger">
-                    <span class="glyphicon glyphicon-remove"></span><strong> Error! Please check all page inputs.</strong>
+                    <span class="glyphicon glyphicon-remove"></span><strong>{{vm.getBooksError}}</strong>
                 </div>
             </div>
         </div>
@@ -24,49 +21,27 @@
                 <thead>
                     <tr>
                         <td>Title</td>
+                        <td>Author</td>
                         <td>Description</td>
-                        <td>Price</td>
-                        <td>Quantity</td>
+                        <td>Cost Price</td>
+                        <td>Sales Price</td>
                         <td>Category</td>
+                        <td>Book Cover</td>
+                        <td>Book</td>
                     </tr>
                 </thead>
 
                 <tbody>
-                    <tr>
-                            <td>Harry Potter And The Chamber Of Secrets</td>
-                            <td>A wizadry book for kids</td>
-                            <td>29.99</td>
-                            <td>211</td>
-                            <td>Adventure</td>
-                    </tr>
-                    <tr>
-                            <td>Harry Potter And The Chamber Of Secrets</td>
-                            <td>A wizadry book for kids</td>
-                            <td>29.99</td>
-                            <td>211</td>
-                            <td>Adventure</td>
-                    </tr>
-                    <tr>
-                            <td>Harry Potter And The Chamber Of Secrets</td>
-                            <td>A wizadry book for kids</td>
-                            <td>29.99</td>
-                            <td>211</td>
-                            <td>Adventure</td>
-                    </tr>
-                    <tr>
-                            <td>Harry Potter And The Chamber Of Secrets</td>
-                            <td>A wizadry book for kids</td>
-                            <td>29.99</td>
-                            <td>211</td>
-                            <td>Adventure</td>
-                    </tr>
-                    <tr>
-                            <td>Harry Potter And The Chamber Of Secrets</td>
-                            <td>A wizadry book for kids</td>
-                            <td>29.99</td>
-                            <td>211</td>
-                            <td>Adventure</td>
-                    </tr>
+                        <tr ng-repeat="book in vm.books">
+                                <td>{{book.title}}</td>
+                                <td>{{book.author}}</td>
+                                <td>{{book.description}}</td>
+                                <td>{{book.price}}</td>
+                                <td>{{book.sales_price}}</td>
+                                <td>{{book.category.name}}</td>
+                                <td><img ng-src="{{book.book_image.image_path}}"></td>
+                                <td>{{book.book_image.book_name}}</td>
+                        </tr>
                 </tbody>
         </table>
 

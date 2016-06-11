@@ -17,15 +17,17 @@
 		var vm = this;
 
 		vm.categoryDetails={};
+		vm.bookDetails={};
 		vm.addCategorySuccess='';
 		vm.addCategoryError='';
-		/*vm.products=[];
-		vm.productDetails={};
-		
-		vm.bannerDetails={};
+		vm.addBookSuccess='';
+		vm.addBookError='';
 		vm.categories=[];
-		vm.addProductSuccess='';
-		vm.addProductError='';
+		vm.books=[];
+		vm.getBooksError='';
+		
+		/*
+		vm.bannerDetails={};
 		vm.addBannerError='';
 		vm.addBannerSuccess='';
 		vm.banners=[];
@@ -36,35 +38,40 @@
 
 		if($state.current.name != 'admin') vm.currentStateName='other'; else vm.currentStateName='admin';
 
-		
-		vm.addProduct=function(isValid){
+		*/
+		vm.addBook=function(isValid){
 			
 			if(!isValid) return;
 
-			vm.addProductSuccess='';
-			vm.addProductError='';
+			vm.addBookSuccess='';
+			vm.addBookError='';
 
-			var fd = new FormData();
-			fd.append('image', vm.productDetails.image);
-			fd.append('title',vm.productDetails.title);
-			fd.append('category_id',vm.productDetails.category_id);
-			fd.append('description',vm.productDetails.description);
-			fd.append('price',vm.productDetails.price);
+			vm.fd = new FormData();
+			
+			vm.fd.append('title', vm.bookDetails.title);
+			vm.fd.append('author', vm.bookDetails.author);
+			vm.fd.append('price', vm.bookDetails.price);
+			vm.fd.append('sales_price', vm.bookDetails.sales_price);
+			vm.fd.append('quantity', vm.bookDetails.quantity);
+			vm.fd.append('category_id', vm.bookDetails.category_id);
+			vm.fd.append('description', vm.bookDetails.description);
+			vm.fd.append('image', vm.bookDetails.image);
+			vm.fd.append('book', vm.bookDetails.book);
 
-			AdminService.product().save(fd).$promise.then(
+			AdminService.books().save(vm.fd).$promise.then(
 				function(data){
-			  		vm.addProductSuccess=data.success;
+			  		vm.addBookSuccess=data.success;
 				},
 				function (response) {
-					vm.addProductError=response.error;
+					vm.addBookError=response.data[Object.keys(response.data)[0]][0];
 	      			});
 			
 		}
-		*/
+		
 		vm.addCategory=function(isValid){
-			//alert(JSON.stringify(isValid));
+			
 			if(!isValid) return;
-			//alert("I passed");
+
 			vm.addCategorySuccess='';
 			vm.addCategoryError='';
 
@@ -77,31 +84,34 @@
 		          			vm.addCategoryError=response.error;
 		      		});
 		}
-		/*
+		
 		vm.getCategories=function(){
 			
+			vm.getBooksError='';
 			//Get all categories
 			AdminService.category().query().$promise.then( 
 				function(data){
-			  		vm.categories=data;// handle success
+			  		vm.categories=data.categories;
 				},
 		      		function (response) {
-		          			console.error(response); //  handle error response
+		          			vm.getBooksError = response;
 		      		});
 		}
 
-		vm.getProducts=function(){
+		
+		vm.getBooks=function(){
 			
 			//Get all categories
-			AdminService.product().query().$promise.then( 
+			AdminService.books().query().$promise.then( 
 				function(data){
-			  		vm.products=data.products;// handle success
+			  		vm.books=data.books;
 				},
 		      		function (response) {
 		          			//console.error(response); //  handle error response
 		      		});
 		}
 
+		/*
 		vm.addBanner=function(isValid){
 			if(!isValid) return;
 
@@ -189,9 +199,9 @@
 		}
 
 		vm.checkAuth();
-		vm.getCategories();
-		vm.getProducts();
 		vm.getBanners();*/
+		vm.getCategories();
+		vm.getBooks();
 
 	}
 
