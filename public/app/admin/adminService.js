@@ -11,6 +11,8 @@
 
         	var adminManager = {};
 
+            var bookEditDetails='';
+
         	/*, {
    		 stripTrailingSlashes: true
 	    }
@@ -46,6 +48,14 @@
                             }
                 });
         }
+
+        adminManager.setEditBookDetails=function(details){
+                    bookEditDetails = details;
+            }
+
+            adminManager.getEditBookDetails=function(){
+                    return bookEditDetails;
+            }
 
         return adminManager;
     }

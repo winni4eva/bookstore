@@ -25,13 +25,16 @@
 		vm.categories=[];
 		vm.books=[];
 		vm.getBooksError='';
-		
+		vm.removeBookSuccess='';
+		vm.removeBookError='';
+		vm.selectedBookId=0;
+		vm.bookActions='';
+		vm.edit=false;
 		/*
 		vm.bannerDetails={};
 		vm.addBannerError='';
 		vm.addBannerSuccess='';
 		vm.banners=[];
-		vm.selectedProductId=0;
 		vm.removeProductError='';
 		vm.removeProductSuccess='';
 		vm.user='';
@@ -39,6 +42,7 @@
 		if($state.current.name != 'admin') vm.currentStateName='other'; else vm.currentStateName='admin';
 
 		*/
+
 		vm.addBook=function(isValid){
 			
 			if(!isValid) return;
@@ -48,6 +52,8 @@
 
 			vm.fd = new FormData();
 			
+			var bookId = vm.bookDetails.id || 0;
+			vm.fd.append('id', bookId);
 			vm.fd.append('title', vm.bookDetails.title);
 			vm.fd.append('author', vm.bookDetails.author);
 			vm.fd.append('price', vm.bookDetails.price);
@@ -101,6 +107,8 @@
 		
 		vm.getBooks=function(){
 			
+			vm.removeBookError='';
+			vm.removeBookSuccess='';
 			//Get all categories
 			AdminService.books().query().$promise.then( 
 				function(data){
@@ -111,37 +119,66 @@
 		      		});
 		}
 
-		/*
-		vm.addBanner=function(isValid){
-			if(!isValid) return;
+		vm.removeBook=function(bookId){
+			vm.removeBookSuccess='';
+			vm.removeBookError='';
+			vm.getBooksError='';
 
-			vm.addBannerError='';
-			vm.addBannerSuccess='';
-
-			var fd = new FormData();
-			fd.append('image', vm.bannerDetails.image);
-
-			//Save banner
-			AdminService.banner().save(fd).$promise.then( 
-				function(data){
-			  		vm.addBannerSuccess=data.success;
+			AdminService.books().remove({id: bookId}, {} ).$promise.then(
+				function(data, headers){
+			  		vm.removeBookSuccess=data.success;
+			  		vm.getBooks();
+			  		vm.selectedBookId=0;
 				},
-		      		function (response) {
-		          			vm.addBannerError=response.error;
-		      		});
+				function (response) {
+					vm.removeBookError=response.data.error;
+	      			});
 		}
 
-		vm.getBanners=function(){
+		vm.editEntity=function(entityId, entity){
+
+			if(entity=='book'){
+
+				angular.forEach(vm.books, function(book, key){
+
+					if(entityId==book.id) 
+					{
+						var obj = {};
+
+						obj.id = book.id;
+						obj.title = book.title;
+						obj.author = book.author;
+						obj.price = book.price;
+						obj.sales_price = book.sales_price;
+						obj.quantity = book.quantity;
+						obj.category_id = book.category_id;
+						obj.description = book.description;
+
+						AdminService.setEditBookDetails( obj );
+
+						$state.go("admin.add_book", {id: book.id });
+					}
+				});
+
+			}
 			
-			//Get all banners
-			AdminService.banner().query().$promise.then( 
-				function(data){
-			  		vm.banners=data.banners;// handle success
-				},
-		      		function (response) {
-		          			//console.error(response); //  handle error response
-		      		});
 		}
+
+		vm.checkState=function(){
+
+			if($state.current.name == "admin.add_book"){
+				if($state.params.id){
+					vm.bookDetails=AdminService.getEditBookDetails();
+					vm.edit = true;
+				}else{
+					vm.edit = false;
+					vm.bookDetails={};
+				}
+			}
+
+		}
+
+		/*
 
 		vm.checkAuth=function(){
 			
@@ -167,32 +204,6 @@
 		                });
 		}
 
-		$scope.show = function(template) {
-		        ModalService.showModal({
-		            templateUrl: template,
-		            controller: "ModalController"
-		        }).then(function(modal) {
-		            modal.element.modal();
-		            modal.close.then(function(result) {
-		                if(result[0] == 'Yes' && result[1] == 'product') vm.removeProduct( vm.selectedProductId );
-		            });
-		        });
-		};
-
-		vm.removeProduct=function(productId){
-			vm.removeProductSuccess='';
-			vm.removeProductError='';
-
-			AdminService.product().remove({id: productId}, {} ).$promise.then(
-				function(data, headers){
-			  		vm.removeProductSuccess=data.success;
-			  		vm.getProducts();
-				},
-				function (response) {
-					vm.removeProductError=response.data.error;
-	      			});
-		}
-
 		vm.go=function(state){
 			vm.currentStateName='other';
 			$state.go(state);
@@ -200,8 +211,34 @@
 
 		vm.checkAuth();
 		vm.getBanners();*/
+
+		vm.show = function(template) {
+		        ModalService.showModal({
+		            templateUrl: template,
+		            controller: "ModalController"
+		        }).then(function(modal) {
+		            modal.element.modal();
+		            modal.close.then(function(result) {
+		                if(result[0] == 'Yes' && result[1] == 'book') vm.removeBook( vm.selectedBookId );
+		            });
+		        });
+		};
+
+		vm.activate = function(option,id){
+			
+			if(option=='book'){
+				if(vm.bookActions=='delete') {
+					vm.show('book_delete.html');
+				}else if(vm.bookActions=='edit'){
+					vm.editEntity(id, 'book');
+				}
+				//if(vm.bookActions=='download')   
+			}
+		}
+
 		vm.getCategories();
 		vm.getBooks();
+		vm.checkState();
 
 	}
 

@@ -44,7 +44,7 @@
                                 dashboard: false,
                                 admin: true
                             }).state("admin.add_book", {
-                                url: "/add_book",
+                                url: "/add_book/:id",
                                 templateUrl: "app/admin/add_book.html",
                                 controller: "AdminController as vm",
                                 authenticated: true,

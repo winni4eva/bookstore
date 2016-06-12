@@ -1,13 +1,13 @@
 
-<div class="container">
+<div class="container" style="width: 100%">
 
 <div class="page-header">
     <h1>Books <!-- <small></small> --></h1>
 </div>
 
 <!-- Registration form - START -->
-<div class="container">
-    <div class="row">
+<div class="">
+    <div class="row" style="">
         
         <div class="" ng-show="vm.getBooksError!=''">
             <div class="col-md-12">
@@ -17,6 +17,33 @@
             </div>
         </div>
 
+        <div class="" ng-show="vm.removeBookError!=''">
+            <div class="col-md-12">
+                <div class="alert alert-danger">
+                    <span class="glyphicon glyphicon-remove"></span><strong>{{vm.removeBookError}}</strong>
+                </div>
+            </div>
+        </div>
+
+        <div class="" ng-show="vm.removeBookSuccess!=''">
+            <div class="col-md-12">
+                <div class="alert alert-success">
+                    <span class="glyphicon glyphicon-remove"></span><strong>{{vm.removeBookSuccess}}</strong>
+                </div>
+            </div>
+        </div>
+        <!-- <p><pdf-download url="public/cover_images/book/12/animal_farm.pdf" filename="animal_farm.pdf"></pdf-download></p> -->
+
+        <div class="search-bar" style="float:left !important">
+                <form>
+                    <input type="text" placeholder="search" ng-model="vm.bookSearch" style="margin-bottom:-50px !important">
+                </form>
+        </div>
+        <div class="pagination" style="float:right">
+                <dir-pagination-controls max-size="5" direction-links="true" boundary-links="true" pagination-id="books">
+                </dir-pagination-controls>
+        </div>
+        <div class="clear"> </div>
         <table class="table table-responsive">
                 <thead>
                     <tr>
@@ -27,26 +54,59 @@
                         <td>Sales Price</td>
                         <td>Category</td>
                         <td>Book Cover</td>
-                        <td>Book</td>
+                        <!-- <td>Book</td> -->
+                        <td>Action</td>
                     </tr>
                 </thead>
 
                 <tbody>
-                        <tr ng-repeat="book in vm.books">
+                            <!-- filter:{title:vm.bookSearch} | filter:{author:vm.bookSearch} | filter:{price:vm.bookSearch} | filter:{sales_price:vm.bookSearch} | filter:{name:vm.bookSearch} -->
+                        <tr dir-paginate="book in vm.books | itemsPerPage:2 | filter:vm.bookSearch" pagination-id="books">
                                 <td>{{book.title}}</td>
                                 <td>{{book.author}}</td>
                                 <td>{{book.description}}</td>
                                 <td>{{book.price}}</td>
                                 <td>{{book.sales_price}}</td>
                                 <td>{{book.category.name}}</td>
-                                <td><img ng-src="{{book.book_image.image_path}}"></td>
-                                <td>{{book.book_image.book_name}}</td>
+                                <td><img ng-src="{{book.book_image.image_path}}" width="100" height="100"></td>
+                                <!-- <td>{{book.book_image.book_name}}</td> -->
+                                <td class="center">
+                                        <select class="form-control " ng-click="vm.selectedBookId=book.id;vm.activate('book',book.id)" ng-model="vm.bookActions">
+                                                    <option value="" ng-selected="vm.bookActions==''">Select Action</option>
+                                                    <!-- <option value="download" ng-selected="vm.bookActions=='download'">Download</option> -->
+                                                    <option value="edit" ng-selected="vm.bookActions=='edit'">Edit</option>
+                                                    <option value="delete" ng-selected="vm.bookActions=='delete'">Delete</option>
+                                        </select>
+                                </td>
                         </tr>
                 </tbody>
         </table>
-
+        <div class="pagination" style="float:right">
+                <dir-pagination-controls max-size="5" direction-links="true" boundary-links="true" pagination-id="books">
+                </dir-pagination-controls>
+        </div>
     </div>
 </div>
 <!-- Registration form - END -->
 
 </div>
+
+<script type="text/ng-template" id="book_delete.html">
+    <div class="modal fade">
+        <div class="modal-dialog">
+        <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" ng-click="close('No', 'product')" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Book Delete</h4>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure you want to remove the selected book ?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" ng-click="close('No', 'book')" class="btn btn-default" data-dismiss="modal">No</button>
+                    <button type="button" ng-click="close('Yes', 'book')" class="btn btn-primary" data-dismiss="modal">Yes</button>
+                </div>
+        </div>
+        </div>
+    </div>
+</script>

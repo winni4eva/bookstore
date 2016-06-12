@@ -10,6 +10,7 @@ use App\Book;
 use App\BookImage;
 use Log;
 use DB;
+use Image;
 
 class BooksController extends Controller
 {
@@ -18,9 +19,12 @@ class BooksController extends Controller
 
             protected $bookImage;
 
-            public function __construct(Book $book, BookImage $bookImage){
+            protected $image;
+
+            public function __construct(Book $book, BookImage $bookImage, Image $image){
                         $this->book = $book;
                         $this->bookImage = $bookImage;
+                        $this->image = $image;
             }
             /**
              * Display a listing of the resource.
@@ -67,7 +71,7 @@ class BooksController extends Controller
                                                 try {
 
                                                             //Save book details
-                                                            $book  = $this->book->create( $request->all() );
+                                                             $book  = $this->book->updateOrCreate( ['id' => $request->get('id') ], $request->all() );
 
                                                             //Get saved book id
                                                             $bookId = $book->id;
@@ -90,7 +94,10 @@ class BooksController extends Controller
                                                             //Save Book Cover Image
                                                             $image = $request->file('image');
 
-                                                            $image->move($destinationPath, $image->getClientOriginalName());
+                                                            $img_path = $image->move($destinationPath, $image->getClientOriginalName());
+
+                                                            //Resize cover image
+                                                            Image::make( $img_path )->resize(200, 285)->save( $img_path );
 
                                                             //Save Book
                                                             $pdfBook = $request->file('book');
@@ -106,13 +113,11 @@ class BooksController extends Controller
 
                                                 try {
                                                             //Save book image details
-                                                            $product  = $this->bookImage->create(
-                                                                                                                                        [
-                                                                                                                                                'book_id' => $bookId, 
-                                                                                                                                                'image_path' => "public/cover_images/book/$bookId/".$image->getClientOriginalName(), 
-                                                                                                                                                'book_name' => "public/cover_images/book/$bookId/".$pdfBook->getClientOriginalName()
-                                                                                                                                        ]
-                                                                                                                                    );
+                                                            $this->bookImage->updateOrCreate( [ 'book_id' => $bookId ], [
+                                                                                                                                                                            'book_id' => $bookId, 
+                                                                                                                                                                            'image_path' => "cover_images/book/$bookId/".$image->getClientOriginalName(), 
+                                                                                                                                                                            'book_name' => "cover_images/book/$bookId/".$pdfBook->getClientOriginalName()
+                                                                                                                                                                    ] );
                                                     
                                                 } catch (Exception $e) {
                                                             DB::rollback();
@@ -123,7 +128,9 @@ class BooksController extends Controller
 
                                        DB::commit();
 
-                                       return response()->json(['success' => 'Book saved successfully...'], 200);
+                                       $message = 'Book '. ( ( $request->get('id') > 0 ) ? 'edited' : 'added' ) . ' successfully...';
+                                       
+                                       return response()->json( ['success' =>  $message], 200);
 
                        } catch (Exception $e) {
                                     DB::rollback();
@@ -175,6 +182,23 @@ class BooksController extends Controller
              */
             public function destroy($id)
             {
-                //
+                            try{
+                                    
+                                    if( $bookImage = $this->bookImage->where('book_id', $id)->first() )  {
+                                        if(file_exists($bookImage->image_path)) @unlink($bookImage->image_path);
+                                        if(file_exists($bookImage->book_name)) @unlink($bookImage->book_name);
+
+                                    }
+
+                                    if( $this->book->where('id', $id)->delete() ) return response()->json(['success' => 'Book removed successfully...' ], 200);
+
+                                    return response()->json(['error' => 'Book delete failed...'], 400);
+
+                            }catch (Exception $e)
+                            {
+                                    Log::error("Exception caught, filename: " . $e->getFile() . " on line: " . $e->getLine());
+                                    Log::error($e->getMessage());
+                                    return response()->json(['error' => 'Something unusual happened' ], 500);
+                            }
             }
 }

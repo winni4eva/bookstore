@@ -23,4 +23,34 @@ class Book extends Model {
 
             }
 
+            public function setTitleAttribute($value){
+
+                            $this->attributes['title'] = ucwords( strtolower( $value ) ); 
+
+            }
+
+             public function setAuthorAttribute($value){
+
+                            $this->attributes['author'] = ucwords( strtolower( $value ) ); 
+
+            }
+
+            public function getPriceAttribute($value){
+
+                            return (int)$value;
+            
+            }
+
+            public function getSalesPriceAttribute($value){
+
+                            return (int)$value;
+            
+            }
+
+            public function getQuantityAttribute($value){
+
+                            return (int)$value;
+            
+            }
+
 }

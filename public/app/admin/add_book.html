@@ -7,7 +7,7 @@
 <div class="container">
 
 <div class="page-header">
-    <h1>Add Book <!-- <small></small> --></h1>
+    <h1>{{ (vm.edit )? 'Edit' : 'Add' }} Book <!-- <small></small> --></h1>
 </div>
 
 <!-- Registration form - START -->
@@ -108,7 +108,7 @@
                     </div>
                 </div>
 
-                <input type="submit" name="submit" id="submit" value="Add Book" style="width:25%" class="btn btn-info pull-right" ng-click="vm.addBook(addBookForm.$valid)">
+                <input type="submit" name="submit" id="submit" value="{{ (vm.edit )? 'Edit' : 'Add' }} Book" style="width:25%" class="btn btn-info pull-right" ng-click="vm.addBook(addBookForm.$valid)">
 
             </div>
         </form>

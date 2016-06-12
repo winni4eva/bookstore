@@ -7,7 +7,8 @@
                                                                         'ngResource',
                                                                         'ngRoute',
                                                                         'ngCookies',
-                                                                        'angularModalService'
+                                                                        'angularModalService',
+                                                                         'angularUtils.directives.dirPagination'
                                                                 ]);
             
             //Exception Handling
