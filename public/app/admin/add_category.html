@@ -7,20 +7,20 @@
 <div class="container">
 
 <div class="page-header">
-    <h1>Add Category <!-- <small></small> --></h1>
+    <h1>{{ (vm.edit )? 'Edit' : 'Add' }} Category <!-- <small></small> --></h1>
 </div>
 
 <!-- Registration form - START -->
 <div class="container">
     <div class="row">
     
-        <div class="col-lg-5 col-md-push-1" ng-hide="true">
+        <div class="">
             <div class="col-md-12">
-                <div class="alert alert-success">
-                    <strong><span class="glyphicon glyphicon-ok"></span> Success! Message sent.</strong>
+                <div class="alert alert-success" ng-show="vm.addCategorySuccess!=''">
+                    <strong><span class="glyphicon glyphicon-ok"></span>{{vm.addCategorySuccess}}</strong>
                 </div>
-                <div class="alert alert-danger">
-                    <span class="glyphicon glyphicon-remove"></span><strong> Error! Please check all page inputs.</strong>
+                <div class="alert alert-danger" ng-show="vm.addCategoryError!=''">
+                    <span class="glyphicon glyphicon-remove"></span><strong>{{vm.addCategoryError}}</strong>
                 </div>
             </div>
         </div>
@@ -41,7 +41,7 @@
 
         
 
-                <input type="submit" name="submit" id="submit" value="Add Category" style="width:25%" class="btn btn-info pull-right" ng-click="vm.addCategory(addBookForm.$valid)">
+                <input type="submit" name="submit" id="submit" value="{{ (vm.edit )? 'Edit' : 'Add' }} Category" style="width:25%" class="btn btn-info pull-right" ng-click="vm.addCategory(addBookForm.$valid)">
 
             </div>
 

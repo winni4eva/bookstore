@@ -9,23 +9,68 @@
 <div class="container">
     <div class="row">
 
+        <div class="" ng-show="vm.getCategoryError!=''">
+            <div class="col-md-12">
+                <div class="alert alert-danger">
+                    <span class="glyphicon glyphicon-remove"></span><strong>{{vm.getCategoryError}}</strong>
+                </div>
+            </div>
+        </div>
+
+        <div class="" ng-show="vm.removeCategoryError!=''">
+            <div class="col-md-12">
+                <div class="alert alert-danger">
+                    <span class="glyphicon glyphicon-remove"></span><strong>{{vm.removeCategoryError}}</strong>
+                </div>
+            </div>
+        </div>
+
+        <div class="" ng-show="vm.removeCategorySuccess!=''">
+            <div class="col-md-12">
+                <div class="alert alert-success">
+                    <span class="glyphicon glyphicon-remove"></span><strong>{{vm.removeCategorySuccess}}</strong>
+                </div>
+            </div>
+        </div>
+
+        <div class="search-bar" style="float:left !important">
+                <form>
+                    <input type="text" placeholder="search" ng-model="vm.categorySearch" style="margin-bottom:-50px !important">
+                </form>
+        </div>
+        <div class="pagination" style="float:right">
+                <dir-pagination-controls max-size="5" direction-links="true" boundary-links="true" pagination-id="category">
+                </dir-pagination-controls>
+        </div>
+        <div class="clear"> </div>
         <table class="table table-responsive">
                 <thead>
                     <tr>
                         <td>Category Name</td>
                         <td>Number Of Books</td>
-                        <td>Remove</td>
+                        <td>Action</td>
                     </tr>
                 </thead>
 
                 <tbody>
-                    <tr ng-repeat="category in vm.categories">
+                    <tr dir-paginate="category in vm.categories | itemsPerPage:vm.catItemsPerPage | filter:vm.categorySearch" pagination-id="category">
                             <td>{{category.name}}</td>
-                            <td>10</td>
-                            <td>*</td>
+                            <td>{{category.book_count_relation[0].count}}</td>
+                            <td class="center">
+                                    <select class="form-control " ng-click="vm.selectedCategoryId=category.id;vm.activate('category',category.id)" ng-model="vm.catActions">
+                                                <option value="" ng-selected="vm.catActions==''">Select Action</option>
+                                                <option value="edit" ng-selected="vm.catActions=='edit'">Edit</option>
+                                                <option value="delete" ng-selected="vm.catActions=='delete'">Delete</option>
+                                    </select>
+                            </td>
                     </tr>
                 </tbody>
         </table>
+
+        <div class="pagination" style="float:right">
+                <dir-pagination-controls max-size="5" direction-links="true" boundary-links="true" pagination-id="category">
+                </dir-pagination-controls>
+        </div>
 
         <div class="col-lg-5 col-md-push-1" style="visibility:hidden">
             <div class="col-md-12">
@@ -43,3 +88,23 @@
 <!-- Registration form - END -->
 
 </div>
+
+<script type="text/ng-template" id="cat_delete.html">
+    <div class="modal fade">
+        <div class="modal-dialog">
+        <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" ng-click="close('No', 'category')" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Category Delete</h4>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure you want to remove the selected category ?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" ng-click="close('No', 'category')" class="btn btn-default" data-dismiss="modal">No</button>
+                    <button type="button" ng-click="close('Yes', 'category')" class="btn btn-primary" data-dismiss="modal">Yes</button>
+                </div>
+        </div>
+        </div>
+    </div>
+</script>

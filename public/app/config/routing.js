@@ -51,7 +51,7 @@
                                 dashboard: false,
                                 admin: true
                             }).state("admin.add_category", {
-                                url: "/add_category",
+                                url: "/add_category/:id",
                                 templateUrl: "app/admin/add_category.html",
                                 controller: "AdminController as vm",
                                 authenticated: true,

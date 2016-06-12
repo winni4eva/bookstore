@@ -12,6 +12,7 @@
         	var adminManager = {};
 
             var bookEditDetails='';
+            var categoryEditDetails='';
 
         	/*, {
    		 stripTrailingSlashes: true
@@ -28,6 +29,8 @@
                             },
                             'save': {
                                 method: 'POST', // this method issues a POST request
+                                 headers: { 'Content-Type': undefined },
+                                transformRequest: angular.identity
                             }
                 });
         }
@@ -53,9 +56,17 @@
                     bookEditDetails = details;
             }
 
-            adminManager.getEditBookDetails=function(){
-                    return bookEditDetails;
+        adminManager.getEditBookDetails=function(){
+                return bookEditDetails;
+        }
+
+        adminManager.setEditCategoryDetails=function(details){
+                    categoryEditDetails = details;
             }
+
+        adminManager.getEditCategoryDetails=function(){
+                return categoryEditDetails;
+        }
 
         return adminManager;
     }

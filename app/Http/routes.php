@@ -18,7 +18,7 @@ Route::get('/', function () {
 //Publicly accesible books api
 Route::group(array('prefix' => 'api'), function(){
 
-	Route::group(array('prefix' => 'v1', 'only' => ['index', 'show'] ), function(){
+	Route::group(array('prefix' => 'v1', 'only' => ['index'] ), function(){
 
 		Route::resource('books', 'BooksController');
 
@@ -35,7 +35,6 @@ Route::group(array('prefix' => 'api'), function(){
 
 			Route::resource('books', 'BooksController');
 			Route::resource('categories', 'CategoryController');
-			//Route::resource('banners', 'BannerImagesController');
 
 		});
 

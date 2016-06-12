@@ -19,12 +19,9 @@ class BooksController extends Controller
 
             protected $bookImage;
 
-            protected $image;
-
-            public function __construct(Book $book, BookImage $bookImage, Image $image){
+            public function __construct(Book $book, BookImage $bookImage){
                         $this->book = $book;
                         $this->bookImage = $bookImage;
-                        $this->image = $image;
             }
             /**
              * Display a listing of the resource.
@@ -44,16 +41,6 @@ class BooksController extends Controller
                                     Log::error($e->getMessage());
                                     return response()->json(['error' => 'Something unusual happened' ], 500);
                             }
-            }
-
-            /**
-             * Show the form for creating a new resource.
-             *
-             * @return \Illuminate\Http\Response
-             */
-            public function create()
-            {
-                //
             }
 
             /**
@@ -129,7 +116,7 @@ class BooksController extends Controller
                                        DB::commit();
 
                                        $message = 'Book '. ( ( $request->get('id') > 0 ) ? 'edited' : 'added' ) . ' successfully...';
-                                       
+
                                        return response()->json( ['success' =>  $message], 200);
 
                        } catch (Exception $e) {
@@ -138,40 +125,6 @@ class BooksController extends Controller
                                     Log::error($e->getMessage());
                                     return response()->json(['error' => 'Something unusual happened' ], 500);
                         }
-            }
-
-            /**
-             * Display the specified resource.
-             *
-             * @param  int  $id
-             * @return \Illuminate\Http\Response
-             */
-            public function show($id)
-            {
-                    //
-            }
-
-            /**
-             * Show the form for editing the specified resource.
-             *
-             * @param  int  $id
-             * @return \Illuminate\Http\Response
-             */
-            public function edit($id)
-            {
-                //
-            }
-
-            /**
-             * Update the specified resource in storage.
-             *
-             * @param  \Illuminate\Http\Request  $request
-             * @param  int  $id
-             * @return \Illuminate\Http\Response
-             */
-            public function update(Request $request, $id)
-            {
-                //
             }
 
             /**

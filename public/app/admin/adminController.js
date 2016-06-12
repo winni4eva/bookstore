@@ -30,18 +30,15 @@
 		vm.selectedBookId=0;
 		vm.bookActions='';
 		vm.edit=false;
-		/*
-		vm.bannerDetails={};
-		vm.addBannerError='';
-		vm.addBannerSuccess='';
-		vm.banners=[];
-		vm.removeProductError='';
-		vm.removeProductSuccess='';
-		vm.user='';
+		vm.bookItemsPerPage=10;
+		vm.catItemsPerPage=10;
+		vm.selectedCategoryId=0;
+		vm.catActions='';
+		vm.getCategoryError='';
+		vm.removeCategoryError='';
+		vm.removeCategorySuccess='';
 
-		if($state.current.name != 'admin') vm.currentStateName='other'; else vm.currentStateName='admin';
-
-		*/
+		//if($state.current.name != 'admin') vm.currentStateName='other'; else vm.currentStateName='admin';
 
 		vm.addBook=function(isValid){
 			
@@ -81,27 +78,51 @@
 			vm.addCategorySuccess='';
 			vm.addCategoryError='';
 
+			vm.fd = new FormData();
+			
+			var categoryId = vm.categoryDetails.id || 0;
+			vm.categoryDetails.id=categoryId;
+
+			vm.fd.append('id', categoryId);
+			vm.fd.append('name', vm.categoryDetails.name);
+
 			//Save category
-			AdminService.category().save(vm.categoryDetails).$promise.then( 
+			AdminService.category().save(vm.fd).$promise.then( 
 				function(data){
 			  		vm.addCategorySuccess=data.success;
 				},
 		      		function (response) {
-		          			vm.addCategoryError=response.error;
+		          			vm.addCategoryError=response.data[Object.keys(response.data)[0]][0];
 		      		});
 		}
 		
 		vm.getCategories=function(){
 			
-			vm.getBooksError='';
+			vm.getCategoryError='';
 			//Get all categories
 			AdminService.category().query().$promise.then( 
 				function(data){
 			  		vm.categories=data.categories;
 				},
 		      		function (response) {
-		          			vm.getBooksError = response;
+		          			vm.getCategoryError = response;
 		      		});
+		}
+
+		vm.removeCategory=function(categoryId){
+			vm.removeCategorySuccess='';
+			vm.removeCategoryError='';
+			vm.getCategoryError='';
+
+			AdminService.category().remove({id: categoryId}, {} ).$promise.then(
+				function(data, headers){
+			  		vm.removeCategorySuccess=data.success;
+			  		vm.getCategories();
+			  		vm.selectedCategoryId=0;
+				},
+				function (response) {
+					vm.removeCategoryError=response.data.error;
+	      			});
 		}
 
 		
@@ -109,13 +130,14 @@
 			
 			vm.removeBookError='';
 			vm.removeBookSuccess='';
+			vm.getBooksError='';
 			//Get all categories
 			AdminService.books().query().$promise.then( 
 				function(data){
 			  		vm.books=data.books;
 				},
 		      		function (response) {
-		          			//console.error(response); //  handle error response
+		          			vm.getBooksError=response; //  handle error response
 		      		});
 		}
 
@@ -160,11 +182,29 @@
 					}
 				});
 
+			}else if(entity=='category'){
+				
+				angular.forEach(vm.categories, function(category, key){
+
+					if(entityId==category.id) 
+					{
+						var obj = {};
+
+						obj.id = category.id;
+						obj.name = category.name;
+
+						AdminService.setEditCategoryDetails( obj );
+
+						$state.go("admin.add_category", {id: category.id });
+					}
+				});
+
 			}
 			
 		}
 
 		vm.checkState=function(){
+			vm.edit = false;
 
 			if($state.current.name == "admin.add_book"){
 				if($state.params.id){
@@ -173,6 +213,14 @@
 				}else{
 					vm.edit = false;
 					vm.bookDetails={};
+				}
+			}else if($state.current.name == "admin.add_category"){
+				if($state.params.id){
+					vm.categoryDetails=AdminService.getEditCategoryDetails();
+					vm.edit = true;
+				}else{
+					vm.edit = false;
+					vm.categoryDetails={};
 				}
 			}
 
@@ -220,6 +268,7 @@
 		            modal.element.modal();
 		            modal.close.then(function(result) {
 		                if(result[0] == 'Yes' && result[1] == 'book') vm.removeBook( vm.selectedBookId );
+		                if(result[0] == 'Yes' && result[1] == 'category') vm.removeCategory( vm.selectedCategoryId );
 		            });
 		        });
 		};
@@ -231,8 +280,13 @@
 					vm.show('book_delete.html');
 				}else if(vm.bookActions=='edit'){
 					vm.editEntity(id, 'book');
+				} 
+			}else if(option=='category'){
+				if(vm.catActions=='delete') {
+					vm.show('cat_delete.html');
+				}else if(vm.catActions=='edit'){
+					vm.editEntity(id, 'category');
 				}
-				//if(vm.bookActions=='download')   
 			}
 		}
 

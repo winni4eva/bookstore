@@ -24,4 +24,10 @@ class Category extends Model {
 
                 }
 
+                public function bookCountRelation() {
+
+                        return $this->hasMany('App\Book')->selectRaw('category_id, count(*) as count')->groupBy('category_id');
+
+                }
+
 }

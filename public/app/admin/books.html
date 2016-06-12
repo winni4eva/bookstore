@@ -61,7 +61,7 @@
 
                 <tbody>
                             <!-- filter:{title:vm.bookSearch} | filter:{author:vm.bookSearch} | filter:{price:vm.bookSearch} | filter:{sales_price:vm.bookSearch} | filter:{name:vm.bookSearch} -->
-                        <tr dir-paginate="book in vm.books | itemsPerPage:2 | filter:vm.bookSearch" pagination-id="books">
+                        <tr dir-paginate="book in vm.books | itemsPerPage:vm.bookItemsPerPage | filter:vm.bookSearch" pagination-id="books">
                                 <td>{{book.title}}</td>
                                 <td>{{book.author}}</td>
                                 <td>{{book.description}}</td>
