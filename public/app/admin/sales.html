@@ -1,15 +1,123 @@
+<style type="text/css">
+    .height {
+            height:40px !important;
+    }
+</style>
 
 <div class="container" style="width:100%">
 
 <div class="page-header">
-    <h1>Sales <!-- <small></small> --></h1>
+    <h1>Sell <!-- <small></small> --></h1>
 </div>
 
     <div class="row">
         
-        <div class="span4 polaroid" style="height: 500px; border:2px solid black"></div>
-        <div class="span4 polaroid" style="height: 500px; border:2px solid black"></div>
-        <div class="span4 polaroid" style="height: 500px; border:2px solid black"></div>
+        <div class="span8 polaroid" style="">
+            <h4>Search Book</h4>
+            <div class="search-bar" style="float:left !important">
+                    <form>
+                        <label style="margin-bottom:-20px !important">what item do you wish to sell...</label>
+                        <input type="text" placeholder="search" ng-model="vm.saleSearch" ng-change="vm.getSalesBooks()" style="margin-bottom:-50px !important">
+                    </form>
+            </div>
+            <div class="clear"> </div>
+
+            <table class="table table-responsive">
+                <thead>
+                    <tr>
+                        <td>Title</td>
+                        <td>Author</td>
+                        <!-- <td>Description</td> -->
+                        <td>Stock</td> 
+                        <td>Sales Price</td>
+                        <td>Category</td>
+                        <td>Book Cover</td>
+                        <td>Qty</td>
+                        <td>Add</td>
+                    </tr>
+                </thead>
+
+                <tbody>
+                            <!-- filter:{title:vm.bookSearch} | filter:{author:vm.bookSearch} | filter:{price:vm.bookSearch} | filter:{sales_price:vm.bookSearch} | filter:{name:vm.bookSearch} -->
+                        <tr dir-paginate="book in vm.saleBooks | itemsPerPage:5" pagination-id="cartBooks">
+                                <td>{{book.title}}</td>
+                                <td>{{book.author}}</td>
+                                <!-- <td>{{book.description}}</td> -->
+                                <td>{{book.quantity}}</td>
+                                <td>{{book.sales_price}}</td>
+                                <td>{{book.category.name}}</td>
+                                <td><img ng-src="{{book.book_image.image_path}}" width="100" height="100"></td>
+                                <td><input type="number" class="form-control" ng-model="vm.saleQty[$index]" style="width:60px;height:35px" min="1"></td>
+                                <td><a class="btn btn-default" ng-click="vm.addToCart($index)">Add</a></td>
+                        </tr>
+                </tbody>
+        </table>
+        </div>
+
+        <div class="span8 polaroid" style="">
+                <h4>Cart</h4>
+
+                <table class="table table-responsive">
+                    <thead>
+                        <tr>
+                            <td>Title</td>
+                            <td>Price</td>
+                            <td>Qty</td>
+                            <td>Cost</td>
+                            <td>Remove</td>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                            <tr dir-paginate="cart in vm.bookCart | itemsPerPage:5" pagination-id="cart">
+                                    <td>{{cart.book.title}}</td>
+                                    <td>{{cart.price}}</td>
+                                    <td>{{cart.quantity}}</td>
+                                    <td>{{cart.price * cart.quantity}}</td>
+                                    <td><span class="glyphicon glyphicon-asterisk"  ng-click="vm.removeCartItem($index)" style="cursor:pointer"></span></td>
+                            </tr>
+                    </tbody>
+
+                    <tfoot >
+                        <tr ng-if="vm.totalQty>0">
+                                <td>Total</td>
+                                <td></td>
+                                <td>{{ vm.totalQty }}</td>
+                                <td>GHC {{ vm.totalCost }}</td>
+                                <td></td>
+                        </tr>
+                    </tfoot>
+            </table>
+
+            <form role="form" name="balanceForm" ng-if="vm.totalQty>0">
+            <div class="">
+                <div class="form-group" style="float:left;margin-right:5px !important">
+                    <label for="received">Amount Received</label>
+                    <div class="input-group">
+                        <input type="number" step="any" class="form-control height" name="received" id="received" ng-model="vm.checkoutDetails.received" ng-change="vm.getBalance()" required>
+                        <!-- <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span> -->
+                    </div>
+                </div>
+
+                <div class="form-group" style="float:left;margin-right:5px !important">
+                    <label for="balance">Balance</label>
+                    <div class="input-group">
+                        <input type="text" class="form-control height" id="balance" name="balance" ng-model="vm.checkoutDetails.balance" ng-disabled="true">
+                        <!-- <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span> -->
+                    </div>
+                </div>
+
+                <div class="form-group" style="float:left !important">
+                    <div class="input-group">
+                        <button class="btn btn-default height" ng-if="vm.hideCheckout" style="float:right;margin-top:25%" ng-click="vm.checkout(balanceForm.$valid)">CHECKOUT</button>
+                    </div>
+                 </div>
+                </div>
+                </form>
+
+           
+
+        </div>
 
     </div>
 <!-- Registration form - END -->

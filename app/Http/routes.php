@@ -35,6 +35,7 @@ Route::group(array('prefix' => 'api'), function(){
 
 			Route::resource('books', 'BooksController');
 			Route::resource('categories', 'CategoryController');
+			Route::resource('sales', 'SalesController');
 
 		});
 

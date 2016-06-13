@@ -37,6 +37,10 @@
 		vm.getCategoryError='';
 		vm.removeCategoryError='';
 		vm.removeCategorySuccess='';
+		vm.saleSearch='';
+		vm.saleQty=[];
+		vm.bookCart=[];
+		vm.checkoutDetails={};
 
 		//if($state.current.name != 'admin') vm.currentStateName='other'; else vm.currentStateName='admin';
 
@@ -60,6 +64,7 @@
 			vm.fd.append('description', vm.bookDetails.description);
 			vm.fd.append('image', vm.bookDetails.image);
 			vm.fd.append('book', vm.bookDetails.book);
+			vm.saleBooks=[];
 
 			AdminService.books().save(vm.fd).$promise.then(
 				function(data){
@@ -224,6 +229,68 @@
 				}
 			}
 
+		}
+
+		vm.getSalesBooks=function(){
+
+			AdminService.sales().query({search: vm.saleSearch}).$promise.then( 
+				function(data){
+			  		vm.saleBooks=data.books;
+				},
+		      		function (response) {
+		          			vm.getBooksError=response;
+		      		});
+		}
+
+		vm.totalQty = 0;
+		vm.totalCost = 0;
+
+		vm.addToCart=function(index){
+			//alert(JSON.stringify(vm.saleBooks[index].sales_price));
+			var data = { book: vm.saleBooks[index], quantity: vm.saleQty[index], price: vm.saleBooks[index].sales_price };
+			vm.totalQty += vm.saleQty[index];
+			vm.totalCost += vm.saleQty[index] * vm.saleBooks[index].sales_price;
+			/*
+			angular.forEach(vm.bookCart, function(cart, key){
+				
+				if(cart){
+					if(cart.book.id==vm.saleBooks[index].id){
+						//var data = {book: vm.saleBooks[index], quantity: vm.saleQty[index]};
+						vm.bookCart[key]=data;
+					}else{
+						//var data = {book: vm.saleBooks[index], quantity: vm.saleQty[index]};
+						vm.bookCart.push(data);
+					}
+				}else{
+					//var data = {book: vm.saleBooks[index], quantity: vm.saleQty[index]};
+					vm.bookCart.push(data);
+				}
+			});*/
+
+			//if(vm.bookCart.length==0) 
+			vm.bookCart.push(data);
+			
+		}
+
+		vm.removeCartItem=function(index){
+			
+			vm.totalQty = vm.totalQty - vm.bookCart[index].quantity;
+			vm.totalCost = vm.totalCost - ( vm.bookCart[index].quantity * vm.bookCart[index].price );
+			vm.bookCart.splice(index, 1);
+			//alert(JSON.stringify(vm.bookCart[index].quantity));
+		}
+
+		vm.checkout=function(isValid){
+			if(!isValid) return;
+			alert("Form is valid");
+		}
+
+		vm.hideCheckout = false;
+		vm.getBalance=function(){
+			vm.hideCheckout = false;
+			if(vm.totalCost > vm.checkoutDetails.received) return;
+			vm.checkoutDetails.balance = vm.checkoutDetails.received - vm.totalCost;
+			vm.hideCheckout = true;
 		}
 
 		/*
