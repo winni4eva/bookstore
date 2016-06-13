@@ -246,7 +246,10 @@
 		vm.totalCost = 0;
 
 		vm.addToCart=function(index){
-			//alert(JSON.stringify(vm.saleBooks[index].sales_price));
+			if(vm.saleQty[index]==undefined) {
+				alert("Please enter a value for quantity");
+				return;
+			}
 			var data = { book: vm.saleBooks[index], quantity: vm.saleQty[index], price: vm.saleBooks[index].sales_price };
 			vm.totalQty += vm.saleQty[index];
 			vm.totalCost += vm.saleQty[index] * vm.saleBooks[index].sales_price;
