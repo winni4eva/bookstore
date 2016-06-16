@@ -9,7 +9,18 @@
 <div class="page-header">
     <h1>Sell <!-- <small></small> --></h1>
 </div>
-
+    
+    <div class="">
+            <div class="col-md-12">
+                <div class="alert alert-success" ng-show="vm.saleSuccess!=''">
+                    <strong><span class="glyphicon glyphicon-ok"></span>{{vm.saleSuccess}}</strong>
+                </div>
+                <div class="alert alert-danger" ng-show="vm.saleError!=''">
+                    <span class="glyphicon glyphicon-remove"></span><strong>{{vm.saleError}}</strong>
+                </div>
+            </div>
+        </div>
+        
     <div class="row">
         
         <div class="span8 polaroid" style="">

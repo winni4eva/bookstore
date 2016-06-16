@@ -37,7 +37,7 @@
 
                             if(next.authenticated){
                                 //alert(JSON.stringify(AuthService));
-                                var user = $cookieStore.get('vlcuser');;
+                                var user = $cookieStore.get('vlcuser');
                                 if(user)
                                 {
                                     //alert('User logged In');

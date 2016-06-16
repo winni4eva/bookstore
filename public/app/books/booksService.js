@@ -9,16 +9,33 @@
 
     function BookService($resource) {
 
-        	return $resource('/api/v1/books/:id', { id: '@id' }, {
-	    update: {
-	      method: 'PUT' // this method issues a PUT request
-	    }
-	});
+            var bookManager = {};
 
-        	/*, {
-   		 stripTrailingSlashes: true
-	    }
-    	*/
+        	bookManager.category=function(){
+                    return $resource('/api/v1/categories/:id', { id: '@id' }, {
+                           'update': {
+                                    method: 'PUT' // this method issues a PUT request
+                                },
+                                'query': {
+                                    method: 'GET', // this method issues a GET request
+                                    isArray: false 
+                                }
+                    });
+            }
+
+            bookManager.books=function(){
+                    return $resource('/api/v1/books/:id', { id: '@id' }, {
+                           'update': {
+                                    method: 'PUT' // this method issues a PUT request
+                                },
+                                'query': {
+                                    method: 'GET', // this method issues a GET request
+                                    isArray: false 
+                                }
+                    });
+            }
+
+            return bookManager;
 
     }
 

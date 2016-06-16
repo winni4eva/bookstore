@@ -16,54 +16,26 @@
 		</div> -->
 		
 	<div class="content-grids">
-		<h4>Deals of the day</h4>
 		<div class="section group">
-		<div class="grid_1_of_4 images_1_of_4 products-info">
-			 <img src="images/cover1.jpg">
-			 <a href="single.html">Duis aute irure dolor in reprehenderit sed do eiusmod tempor incididunt</a>
-			 <h3>$260</h3>
-			 <ul>
-			 	<li><a  class="cart" href="single.html"> </a></li>
-			 	<li><a  class="i" href="single.html"> </a></li>
-			 	<li><a  class="Compar" href="single.html"> </a></li>
-			 	<li><a  class="Wishlist" href="single.html"> </a></li>
-			 </ul>
+			<!-- <div class="grid_1_of_4 images_1_of_4 products-info" style="float:left !important" ng-repeat="book in vm.books"> -->
+			<div dir-paginate="book in vm.books | itemsPerPage:8 | filter:vm.bookSearch" style="float:left !important" class="grid_1_of_4 images_1_of_4 products-info" pagination-id="books">
+				 <img ng-src="{{book.book_image.image_path}}">
+				 <a href="#">{{book.title}}</a>
+				 <h3>GHC {{book.sales_price}}</h3>
+				 <!-- <ul>
+				 	<li><a  class="cart" href="single.html"> </a></li>
+				 	<li><a  class="i" href="single.html"> </a></li>
+				 	<li><a  class="Compar" href="single.html"> </a></li>
+				 	<li><a  class="Wishlist" href="single.html"> </a></li>
+				 </ul> -->
+			</div>
 		</div>
-		<div class="grid_1_of_4 images_1_of_4 products-info">
-			 <img src="images/cover1.jpg">
-			  <a href="single.html">Duis aute irure dolor in reprehenderit sed do eiusmod tempor incididunt</a>
-			 <h3>$150</h3>
-			 <ul>
-			 	<li><a  class="cart" href="single.html"> </a></li>
-			 	<li><a  class="i" href="single.html"> </a></li>
-			 	<li><a  class="Compar" href="single.html"> </a></li>
-			 	<li><a  class="Wishlist" href="single.html"> </a></li>
-			 </ul>
-		</div>
-		<div class="grid_1_of_4 images_1_of_4 products-info">
-			 <img src="images/cover1.jpg">
-			  <a href="single.html">Duis aute irure dolor in reprehenderit sed do eiusmod tempor incididunt</a>
-			 <h3>$130</h3>
-			 <ul>
-			 	<li><a  class="cart" href="single.html"> </a></li>
-			 	<li><a  class="i" href="single.html"> </a></li>
-			 	<li><a  class="Compar" href="single.html"> </a></li>
-			 	<li><a  class="Wishlist" href="single.html"> </a></li>
-			 </ul>
-		</div>
-		<div class="grid_1_of_4 images_1_of_4 products-info">
-			 <img src="images/cover1.jpg">
-			  <a href="single.html">Duis aute irure dolor in reprehenderit sed do eiusmod tempor incididunt</a>
-			 <h3>$460</h3>
-			 <ul>
-			 	<li><a  class="cart" href="single.html"> </a></li>
-			 	<li><a  class="i" href="single.html"> </a></li>
-			 	<li><a  class="Compar" href="single.html"> </a></li>
-			 	<li><a  class="Wishlist" href="single.html"> </a></li>
-			 </ul>
-		</div>
-	</div>
-	<div class="section group">
+
+		<div class="pagination" style="float:right">
+	                <dir-pagination-controls max-size="5" direction-links="true" boundary-links="true" pagination-id="books">
+	                </dir-pagination-controls>
+	        </div>
+<!-- 	<div class="section group">
 		<div class="grid_1_of_4 images_1_of_4 products-info">
 			 <img src="images/cover1.jpg">
 			 <a href="single.html">Duis aute irure dolor in reprehenderit sed do eiusmod tempor incididunt</a>
@@ -108,30 +80,12 @@
 			 	<li><a  class="Wishlist" href="single.html"> </a></li>
 			 </ul>
 		</div>
-	</div>
+	</div> -->
 
 		</div>
 		<div class="content-sidebar">
 			<h4>Categories</h4>
-		<ul>
-			<li><a href="#">Agriculture</a></li>
-			<li><a href="#">Architecture</a></li>
-			<li><a href="#">Art</a></li>
-			<li><a href="#">Biography & Memoir</a></li>
-			<li><a href="#">Business</a></li>
-			<li><a href="#">Children's Fiction</a></li>
-			<li><a href="#">Children's Non-Fiction</a></li>
-			<li><a href="#">Cooking, Food & Wine</a></li>
-			<li><a href="#">Crafts & Hobbies </a></li>
-			<li><a href="#">Family & Parenting</a></li>
-			<li><a href="#">Fiction </a></li>
-			<li><a href="#">Fun & Games</a></li>
-			<li><a href="#">Gardening</a></li>
-			<li><a href="#">Health, Mind, & Body</a></li>
-			<li><a href="#">History</a></li>
-			<li><a href="#">Home Reference/How-to </a></li>
-			<li><a href="#">Humor</a></li>
-			<li><a href="#">Medical</a></li>
-			<li><a href="#">Music</a></li>
+		<ul ng-repeat="category in vm.categories">
+			<li><a href="#">{{category.name}}</a></li>
 		</ul>
 		</div> 

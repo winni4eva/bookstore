@@ -41,6 +41,12 @@
 		vm.saleQty=[];
 		vm.bookCart=[];
 		vm.checkoutDetails={};
+		vm.saleSuccess='';
+		vm.saleError='';
+		vm.totalQty = 0;
+		vm.totalCost = 0;
+		vm.hideCheckout = false;
+		vm.loginDetails={};
 
 		//if($state.current.name != 'admin') vm.currentStateName='other'; else vm.currentStateName='admin';
 
@@ -136,7 +142,7 @@
 			vm.removeBookError='';
 			vm.removeBookSuccess='';
 			vm.getBooksError='';
-			//Get all categories
+			
 			AdminService.books().query().$promise.then( 
 				function(data){
 			  		vm.books=data.books;
@@ -232,18 +238,17 @@
 		}
 
 		vm.getSalesBooks=function(){
+			vm.saleSuccess='';
+			vm.saleError='';
 
 			AdminService.sales().query({search: vm.saleSearch}).$promise.then( 
 				function(data){
 			  		vm.saleBooks=data.books;
 				},
 		      		function (response) {
-		          			vm.getBooksError=response;
+		          			vm.saleError=response;
 		      		});
 		}
-
-		vm.totalQty = 0;
-		vm.totalCost = 0;
 
 		vm.addToCart=function(index){
 			if(vm.saleQty[index]==undefined) {
@@ -280,15 +285,28 @@
 			vm.totalQty = vm.totalQty - vm.bookCart[index].quantity;
 			vm.totalCost = vm.totalCost - ( vm.bookCart[index].quantity * vm.bookCart[index].price );
 			vm.bookCart.splice(index, 1);
-			//alert(JSON.stringify(vm.bookCart[index].quantity));
 		}
 
 		vm.checkout=function(isValid){
 			if(!isValid) return;
-			alert("Form is valid");
+			vm.saleSuccess='';
+			vm.saleError='';
+			AdminService.sales().save(vm.bookCart).$promise.then( 
+				function(data){
+					vm.bookCart=[];
+					vm.saleBooks=[];
+					vm.totalCost=0;
+					vm.totalQty=0;
+			  		vm.saleSuccess=data.success;
+				},
+		      		function (response) {
+		      			vm.totalCost=0;
+					vm.totalQty=0;
+					vm.bookCart=[];
+		          			vm.saleError=response.data.error;
+		      		});
 		}
-
-		vm.hideCheckout = false;
+		
 		vm.getBalance=function(){
 			vm.hideCheckout = false;
 			if(vm.totalCost > vm.checkoutDetails.received) return;
@@ -298,37 +316,12 @@
 
 		/*
 
-		vm.checkAuth=function(){
-			
-			AuthService.checkLogin()
-		                .success(function(data,status,header,config){
-		                	vm.user=data.user;
-		                })
-		                .error(function(data,status,header,config){
-		                    	AuthService.cookieRemove('vlcuser');
-		                    	$location.path('/login');
-		                });
-		}
-
-		vm.logOut=function(){
-			
-			AuthService.logOut()
-		                .success(function(data,status,header,config){
-		                    	AuthService.cookieRemove('vlcuser');
-		                    	$location.path('/login');
-		                })
-		                .error(function(data,status,header,config){
-		                	//
-		                });
-		}
-
 		vm.go=function(state){
 			vm.currentStateName='other';
 			$state.go(state);
 		}
 
-		vm.checkAuth();
-		vm.getBanners();*/
+		*/
 
 		vm.show = function(template) {
 		        ModalService.showModal({
@@ -360,6 +353,55 @@
 			}
 		}
 
+		vm.loginSuccess='';
+		vm.loginError='';
+		//vm.user={};
+		vm.login=function(isValid){
+
+			if(!isValid) return;
+
+			AdminService.login(vm.loginDetails).success(function(data){
+				vm.loginSuccess=data.success;
+				vm.user=data.user;
+				$rootScope.user=data.user;
+				//Find tomorrow's date.
+  				/*var expireDate = new Date();
+  				expireDate.setDate(expireDate.getDate() + 1);
+  				var expiry = {'expires': expireDate};
+				AdminService.cookieStore('bookStoreUser', data.user, expiry);*/
+				$state.go('admin.books');
+			}).error(function(data){
+				vm.loginError=data.error;
+			}); 
+		}
+		
+		vm.checkAuth=function(){
+			
+			AdminService.checkLogin()
+		                .success(function(data,status,header,config){
+		                	vm.user=data.user;
+		                	$rootScope.user=data.user;
+		                })
+		                .error(function(data,status,header,config){
+		                    	$state.go('login');
+		                });
+		}
+
+		vm.logout=function(){
+			
+			AdminService.logout()
+		                .success(function(data,status,header,config){
+		                    	//AdminService.cookieRemove('bookStoreUser');
+		                    	vm.user={};
+		                    	$rootScope.user={};
+		                    	$state.go('login');
+		                })
+		                .error(function(data,status,header,config){
+		                	//
+		                });
+		}
+
+		vm.checkAuth();
 		vm.getCategories();
 		vm.getBooks();
 		vm.checkState();

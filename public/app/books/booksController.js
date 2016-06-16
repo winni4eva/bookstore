@@ -10,186 +10,45 @@
 		"$location",
 		"ModalService",
 		"$state",
+		"BookService",
 		BookController]);
 
-	function BookController($scope, $rootScope, $location, ModalService, $state) {
+	function BookController($scope, $rootScope, $location, ModalService, $state, BookService) {
 		var vm = this;
 
-		/*vm.products=[];
-		vm.productDetails={};
-		vm.categoryDetails={};
-		vm.bannerDetails={};
+		vm.books=[];
 		vm.categories=[];
-		vm.addProductSuccess='';
-		vm.addProductError='';
-		vm.addCategorySuccess='';
-		vm.addCategoryError='';
-		vm.addBannerError='';
-		vm.addBannerSuccess='';
-		vm.banners=[];
-		vm.selectedProductId=0;
-		vm.removeProductError='';
-		vm.removeProductSuccess='';
-		vm.user='';
-
-		if($state.current.name != 'admin') vm.currentStateName='other'; else vm.currentStateName='admin';
-
+		vm.getCategoryError='';
+		vm.getBooksError='';
 		
-		vm.addProduct=function(isValid){
+		vm.getBooks=function(){
 			
-			if(!isValid) return;
-
-			vm.addProductSuccess='';
-			vm.addProductError='';
-
-			var fd = new FormData();
-			fd.append('image', vm.productDetails.image);
-			fd.append('title',vm.productDetails.title);
-			fd.append('category_id',vm.productDetails.category_id);
-			fd.append('description',vm.productDetails.description);
-			fd.append('price',vm.productDetails.price);
-
-			AdminService.product().save(fd).$promise.then(
-				function(data){
-			  		vm.addProductSuccess=data.success;
-				},
-				function (response) {
-					vm.addProductError=response.error;
-	      			});
+			vm.getBooksError='';
 			
-		}
-
-		vm.addCategory=function(isValid){
-
-			if(!isValid) return;
-
-			vm.addCategorySuccess='';
-			vm.addCategoryError='';
-
-			//Save category
-			AdminService.category().save(vm.categoryDetails).$promise.then( 
+			BookService.books().query().$promise.then( 
 				function(data){
-			  		vm.addCategorySuccess=data.success;
+			  		vm.books=data.books;
 				},
 		      		function (response) {
-		          			vm.addCategoryError=response.error;
+		          			vm.getBooksError=response; //  handle error response
 		      		});
 		}
 
 		vm.getCategories=function(){
 			
-			//Get all categories
-			AdminService.category().query().$promise.then( 
+			vm.getCategoryError='';
+			
+			BookService.category().query().$promise.then( 
 				function(data){
-			  		vm.categories=data;// handle success
+			  		vm.categories=data.categories;
 				},
 		      		function (response) {
-		          			console.error(response); //  handle error response
+		          			vm.getCategoryError = response;
 		      		});
 		}
 
-		vm.getProducts=function(){
-			
-			//Get all categories
-			AdminService.product().query().$promise.then( 
-				function(data){
-			  		vm.products=data.products;// handle success
-				},
-		      		function (response) {
-		          			//console.error(response); //  handle error response
-		      		});
-		}
-
-		vm.addBanner=function(isValid){
-			if(!isValid) return;
-
-			vm.addBannerError='';
-			vm.addBannerSuccess='';
-
-			var fd = new FormData();
-			fd.append('image', vm.bannerDetails.image);
-
-			//Save banner
-			AdminService.banner().save(fd).$promise.then( 
-				function(data){
-			  		vm.addBannerSuccess=data.success;
-				},
-		      		function (response) {
-		          			vm.addBannerError=response.error;
-		      		});
-		}
-
-		vm.getBanners=function(){
-			
-			//Get all banners
-			AdminService.banner().query().$promise.then( 
-				function(data){
-			  		vm.banners=data.banners;// handle success
-				},
-		      		function (response) {
-		          			//console.error(response); //  handle error response
-		      		});
-		}
-
-		vm.checkAuth=function(){
-			
-			AuthService.checkLogin()
-		                .success(function(data,status,header,config){
-		                	vm.user=data.user;
-		                })
-		                .error(function(data,status,header,config){
-		                    	AuthService.cookieRemove('vlcuser');
-		                    	$location.path('/login');
-		                });
-		}
-
-		vm.logOut=function(){
-			
-			AuthService.logOut()
-		                .success(function(data,status,header,config){
-		                    	AuthService.cookieRemove('vlcuser');
-		                    	$location.path('/login');
-		                })
-		                .error(function(data,status,header,config){
-		                	//
-		                });
-		}
-
-		$scope.show = function(template) {
-		        ModalService.showModal({
-		            templateUrl: template,
-		            controller: "ModalController"
-		        }).then(function(modal) {
-		            modal.element.modal();
-		            modal.close.then(function(result) {
-		                if(result[0] == 'Yes' && result[1] == 'product') vm.removeProduct( vm.selectedProductId );
-		            });
-		        });
-		};
-
-		vm.removeProduct=function(productId){
-			vm.removeProductSuccess='';
-			vm.removeProductError='';
-
-			AdminService.product().remove({id: productId}, {} ).$promise.then(
-				function(data, headers){
-			  		vm.removeProductSuccess=data.success;
-			  		vm.getProducts();
-				},
-				function (response) {
-					vm.removeProductError=response.data.error;
-	      			});
-		}
-
-		vm.go=function(state){
-			vm.currentStateName='other';
-			$state.go(state);
-		}
-
-		vm.checkAuth();
+		vm.getBooks();
 		vm.getCategories();
-		vm.getProducts();
-		vm.getBanners();*/
 
 	}
 
